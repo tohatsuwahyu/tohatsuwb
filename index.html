@@ -14,7 +14,7 @@
       color: #b91c1c;
     }
     html {
-      scroll-behavior: smooth; /* biar scroll halus */
+      scroll-behavior: smooth;
     }
   </style>
 </head>
@@ -28,6 +28,8 @@
   </div>
   <div class="flex gap-3 items-center">
     <a href="#top" class="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">Home</a>
+    <a href="#askForm" class="bg-blue-200 px-3 py-1 rounded hover:bg-blue-300">Ask</a>
+    <a href="#downloadForm" class="bg-red-200 px-3 py-1 rounded hover:bg-red-300">Download</a>
     <button onclick="setLang('en')">EN</button> |
     <button onclick="setLang('id')">ID</button> |
     <button onclick="setLang('jp')">日本語</button>
@@ -59,7 +61,7 @@
 </section>
 
 <!-- Form Pertanyaan -->
-<section class="p-8 bg-white shadow max-w-lg mx-auto mt-8">
+<section id="askForm" class="p-8 bg-white shadow max-w-lg mx-auto mt-8">
   <h3 class="text-xl font-bold mb-4" id="form-title">Ask About WingBend</h3>
   <form id="questionForm" class="space-y-4">
     <input type="text" name="name" placeholder="Name" class="w-full border p-2" required>
@@ -85,7 +87,7 @@
     <button type="submit" class="bg-red-600 text-white px-4 py-2">Submit</button>
   </form>
   <div id="downloadOptions" class="hidden mt-4 space-x-4">
-    <a href="e catalog.pdf" download class="bg-blue-600 text-white px-4 py-2 rounded">📥 English Catalog</a>
+    <a href="catalog-en.pdf" download class="bg-blue-600 text-white px-4 py-2 rounded">📥 English Catalog</a>
     <a href="catalog-jp.pdf" download class="bg-yellow-600 text-white px-4 py-2 rounded">📥 日本語カタログ</a>
   </div>
 </section>
@@ -112,7 +114,7 @@ function setLang(lang) {
       desc:"Radius indah dan flange pendek tanpa bekas.",
       form:"Tanyakan tentang WingBend",
       download:"Unduh Katalog",
-      marquee:"Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membengkokkan tanpa bekas"
+      marquee:"Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membentuk tanpa bekas"
     },
     jp: {
       hero:"無痕曲げ",
@@ -137,12 +139,10 @@ document.getElementById('questionForm').addEventListener('submit', e=>{
   e.preventDefault();
   const form = e.target;
 
-  // Simpan ke Google Sheet
   fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
     .then(() => console.log("✅ Question saved to Google Sheet"))
     .catch(() => console.error("❌ Failed to save question"));
 
-  // Buka email client
   const subject = "WingBend Inquiry from " + form.name.value;
   const body = `Name: ${form.name.value}\nPhone: ${form.phone.value}\nEmail: ${form.email.value}\nMessage: ${form.message.value}`;
   window.location.href = `mailto:wahyu@to-hatsu.co.jp?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
