@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WingBend – Mark-Free Forming</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<!-- Header -->
+<header class="flex justify-between p-4 bg-white shadow">
+  <h1 class="text-xl font-bold">WingBend</h1>
+  <div>
+    <button onclick="setLang('en')">EN</button> |
+    <button onclick="setLang('id')">ID</button> |
+    <button onclick="setLang('jp')">日本語</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="p-8 text-center">
+  <h2 id="hero-title" class="text-2xl font-bold">Mark-Free Forming</h2>
+  <p id="hero-desc" class="mt-2">Beautiful radii and short flanges with minimal marking.</p>
+</section>
+
+<!-- Form Pertanyaan -->
+<section class="p-8 bg-white shadow max-w-lg mx-auto">
+  <h3 class="text-xl font-bold mb-4" id="form-title">Ask About WingBend</h3>
+  <form id="questionForm" class="space-y-4">
+    <input type="text" name="name" placeholder="Name" class="w-full border p-2" required>
+    <input type="tel" name="phone" placeholder="Phone Number" class="w-full border p-2" required>
+    <input type="email" name="email" placeholder="Email" class="w-full border p-2" required>
+    <textarea name="message" placeholder="Message" class="w-full border p-2"></textarea>
+    <div class="flex gap-2">
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2">Send</button>
+      <a href="https://wa.me/818021409299" target="_blank" 
+         class="bg-green-600 text-white px-4 py-2">WhatsApp</a>
+    </div>
+  </form>
+</section>
+
+<!-- Download Catalog -->
+<section class="p-8 text-center">
+  <h3 class="text-xl font-bold mb-4" id="download-title">Download Catalog</h3>
+  <form id="downloadForm" class="space-y-4 max-w-md mx-auto">
+    <input type="text" name="name" placeholder="Name" class="w-full border p-2" required>
+    <input type="tel" name="phone" placeholder="Phone Number" class="w-full border p-2" required>
+    <input type="email" name="email" placeholder="Email" class="w-full border p-2" required>
+    <input type="text" name="company" placeholder="Company" class="w-full border p-2" required>
+    <button type="submit" class="bg-red-600 text-white px-4 py-2">Submit & Download</button>
+  </form>
+  <div id="downloadLink" class="hidden mt-4">
+    <a href="e-catalog.pdf" download class="underline text-blue-600">📥 Click here to download</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="p-4 bg-gray-100 text-center">
+  © Tokyo Seimitsu Hatsujo Co., Ltd.
+</footer>
+
+<script>
+// ---- Multi-language dictionary ----
+function setLang(lang) {
+  const dict = {
+    en: {hero:"Mark-Free Forming",desc:"Beautiful radii and short flanges with minimal marking.",form:"Ask About WingBend",download:"Download Catalog"},
+    id: {hero:"Bebas Bekas Tekukan",desc:"Radius indah dan flange pendek tanpa bekas.",form:"Tanyakan tentang WingBend",download:"Unduh Katalog"},
+    jp: {hero:"無痕曲げ",desc:"美しい外Rと短いフランジを跡なく曲げる。",form:"WingBendについて質問",download:"カタログをダウンロード"}
+  };
+  document.getElementById('hero-title').innerText = dict[lang].hero;
+  document.getElementById('hero-desc').innerText = dict[lang].desc;
+  document.getElementById('form-title').innerText = dict[lang].form;
+  document.getElementById('download-title').innerText = dict[lang].download;
+}
+
+// ---- Integrasi Google Sheets ----
+const SCRIPT_URL = "PASTE_APPS_SCRIPT_WEBAPP_URL_HERE";
+
+// Pertanyaan form
+document.getElementById('questionForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  fetch(SCRIPT_URL, { method: 'POST', body: new FormData(e.target)})
+    .then(()=> alert("✅ Your question has been sent!"))
+    .catch(()=> alert("❌ Failed to send."));
+});
+
+// Download catalog form
+document.getElementById('downloadForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  fetch(SCRIPT_URL, { method: 'POST', body: new FormData(e.target)})
+    .then(()=> {
+      document.getElementById('downloadLink').classList.remove('hidden');
+      alert("✅ Data submitted. Now you can download the catalog.");
+    })
+    .catch(()=> alert("❌ Failed to submit data."));
+});
+</script>
+
+</body>
+</html>
