@@ -13,6 +13,9 @@
       font-weight: bold;
       color: #b91c1c;
     }
+    html {
+      scroll-behavior: smooth; /* biar scroll halus */
+    }
   </style>
 </head>
 <body class="bg-gray-50 font-sans">
@@ -23,7 +26,8 @@
     <img src="images/tsh.png" alt="Logo" class="h-8">
     <h1 class="text-xl font-bold">Tokyo Seimitsu Hatsujo.co.,ltd</h1>
   </div>
-  <div>
+  <div class="flex gap-3 items-center">
+    <a href="#top" class="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">Home</a>
     <button onclick="setLang('en')">EN</button> |
     <button onclick="setLang('id')">ID</button> |
     <button onclick="setLang('jp')">日本語</button>
@@ -32,13 +36,13 @@
 
 <!-- Text berjalan -->
 <div class="bg-yellow-100 py-2">
-  <marquee behavior="scroll" direction="left">
+  <marquee id="marqueeText" behavior="scroll" direction="left">
     Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Redefining Mark-Free Forming
   </marquee>
 </div>
 
 <!-- Hero -->
-<section class="relative hero-bg h-[350px] flex flex-col items-center justify-center text-center text-white">
+<section id="top" class="relative hero-bg h-[350px] flex flex-col items-center justify-center text-center text-white">
   <!-- Overlay -->
   <div class="absolute inset-0 bg-black bg-opacity-50"></div>
   
@@ -71,9 +75,9 @@
 </section>
 
 <!-- Download Catalog -->
-<section class="p-8 text-center">
+<section class="p-8 text-center" id="downloadForm">
   <h3 class="text-xl font-bold mb-4" id="download-title">Download Catalog</h3>
-  <form id="downloadForm" class="space-y-4 max-w-md mx-auto">
+  <form id="downloadFormElement" class="space-y-4 max-w-md mx-auto">
     <input type="text" name="name" placeholder="Name" class="w-full border p-2" required>
     <input type="tel" name="phone" placeholder="Phone Number" class="w-full border p-2" required>
     <input type="email" name="email" placeholder="Email" class="w-full border p-2" required>
@@ -96,14 +100,33 @@
 // ---- Multi-language dictionary ----
 function setLang(lang) {
   const dict = {
-    en: {hero:"Mark-Free Forming",desc:"Beautiful radius and short flanges with minimal marking.",form:"Ask About WingBend",download:"Download Catalog"},
-    id: {hero:"Bebas Bekas Tekukan",desc:"Radius indah dan flange pendek tanpa bekas.",form:"Tanyakan tentang WingBend",download:"Unduh Katalog"},
-    jp: {hero:"無痕曲げ",desc:"美しい外Rとショートフランジを跡なく曲げる。",form:"WingBend問い合わせ",download:"カタログをダウンロード"}
+    en: {
+      hero:"Mark-Free Forming",
+      desc:"Beautiful radius and short flanges with minimal marking.",
+      form:"Ask About WingBend",
+      download:"Download Catalog",
+      marquee:"Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Redefining Mark-Free Forming"
+    },
+    id: {
+      hero:"Bebas Bekas Tekukan",
+      desc:"Radius indah dan flange pendek tanpa bekas.",
+      form:"Tanyakan tentang WingBend",
+      download:"Unduh Katalog",
+      marquee:"Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membengkokkan tanpa bekas"
+    },
+    jp: {
+      hero:"無痕曲げ",
+      desc:"美しい外Rとショートフランジを跡なく曲げる。",
+      form:"WingBend問い合わせ",
+      download:"カタログをダウンロード",
+      marquee:"東京精密発條株式会社 – Wing Bend / Wing Bend Plus – 無痕曲げの新定義"
+    }
   };
   document.getElementById('hero-title').innerText = dict[lang].hero;
   document.getElementById('hero-desc').innerText = dict[lang].desc;
   document.getElementById('form-title').innerText = dict[lang].form;
   document.getElementById('download-title').innerText = dict[lang].download;
+  document.getElementById('marqueeText').innerText = dict[lang].marquee;
 }
 
 // ---- URL Google Apps Script (simpan ke Google Sheets) ----
@@ -126,11 +149,10 @@ document.getElementById('questionForm').addEventListener('submit', e=>{
 });
 
 // ---- Download form: simpan ke Google Sheet + tampilkan pilihan EN / JP ----
-document.getElementById('downloadForm').addEventListener('submit', e=>{
+document.getElementById('downloadFormElement').addEventListener('submit', e=>{
   e.preventDefault();
   const form = e.target;
 
-  // Simpan ke Google Sheet
   fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
     .then(() => {
       document.getElementById('downloadOptions').classList.remove('hidden');
