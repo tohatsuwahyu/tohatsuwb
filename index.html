@@ -12,7 +12,7 @@
 <header class="flex justify-between items-center p-4 bg-white shadow">
   <div class="flex items-center gap-2">
     <img src="images/tsh.png" alt="Logo" class="h-8">
-    <h1 class="text-xl font-bold">WingBend</h1>
+    <h1 class="text-xl font-bold">Tokyo Seimitsu Hatsujo.co.,ltd</h1>
   </div>
   <div>
     <button onclick="setLang('en')">EN</button> |
@@ -24,7 +24,7 @@
 <!-- Hero -->
 <section class="p-8 text-center">
   <h2 id="hero-title" class="text-2xl font-bold">Mark-Free Forming</h2>
-  <p id="hero-desc" class="mt-2">Beautiful radii and short flanges with minimal marking.</p>
+  <p id="hero-desc" class="mt-2">Beautiful radius and short flanges with minimal marking.</p>
 </section>
 
 <!-- Form Pertanyaan -->
@@ -69,9 +69,9 @@
 // ---- Multi-language dictionary ----
 function setLang(lang) {
   const dict = {
-    en: {hero:"Mark-Free Forming",desc:"Beautiful radii and short flanges with minimal marking.",form:"Ask About WingBend",download:"Download Catalog"},
+    en: {hero:"Mark-Free Forming",desc:"Beautiful radius and short flanges with minimal marking.",form:"Ask About WingBend",download:"Download Catalog"},
     id: {hero:"Bebas Bekas Tekukan",desc:"Radius indah dan flange pendek tanpa bekas.",form:"Tanyakan tentang WingBend",download:"Unduh Katalog"},
-    jp: {hero:"無痕曲げ",desc:"美しい外Rと短いフランジを跡なく曲げる。",form:"WingBendについて質問",download:"カタログをダウンロード"}
+    jp: {hero:"無痕曲げ",desc:"美しい外Rとショートフランジを跡なく曲げる。",form:"WingBend問い合わせ",download:"カタログをダウンロード"}
   };
   document.getElementById('hero-title').innerText = dict[lang].hero;
   document.getElementById('hero-desc').innerText = dict[lang].desc;
@@ -79,20 +79,37 @@ function setLang(lang) {
   document.getElementById('download-title').innerText = dict[lang].download;
 }
 
-// ---- Form pertanyaan langsung ke email ----
+// ---- URL Google Apps Script (untuk simpan ke Google Sheets) ----
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwy9I8eJrigp0lo5KrkiPCjHvTWaZgrGoinin14A8TX8f-in5qfBfqfBwhWRqeRif-z/exec";
+
+// ---- Form pertanyaan: simpan ke Google Sheet + kirim email ----
 document.getElementById('questionForm').addEventListener('submit', e=>{
   e.preventDefault();
   const form = e.target;
+
+  // Simpan ke Google Sheet
+  fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
+    .then(() => console.log("✅ Question saved to Google Sheet"))
+    .catch(() => console.error("❌ Failed to save question"));
+
+  // Kirim email via mailto
   const subject = "WingBend Inquiry from " + form.name.value;
   const body = `Name: ${form.name.value}\nPhone: ${form.phone.value}\nEmail: ${form.email.value}\nMessage: ${form.message.value}`;
-  window.location.href = `mailto:admin@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = `mailto:wahyu@to-hatsu.co.jp?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
-// ---- Download form: tampilkan pilihan EN / JP ----
+// ---- Download form: simpan ke Google Sheet + tampilkan pilihan EN / JP ----
 document.getElementById('downloadForm').addEventListener('submit', e=>{
   e.preventDefault();
-  document.getElementById('downloadOptions').classList.remove('hidden');
-  alert("✅ Data submitted. Please choose catalog language.");
+  const form = e.target;
+
+  // Simpan ke Google Sheet
+  fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
+    .then(() => {
+      document.getElementById('downloadOptions').classList.remove('hidden');
+      alert("✅ Data submitted. Please choose catalog language.");
+    })
+    .catch(() => alert("❌ Failed to submit data."));
 });
 </script>
 
