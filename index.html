@@ -21,20 +21,23 @@
 <body class="bg-gray-50 font-sans">
 
 <!-- Header -->
-<header class="flex justify-between items-center p-4 bg-white shadow">
+<header class="flex justify-between items-center p-4 bg-white shadow fixed top-0 w-full z-50">
   <div class="flex items-center gap-2">
     <img src="images/tsh.png" alt="Logo" class="h-8">
     <h1 class="text-xl font-bold">Tokyo Seimitsu Hatsujo.co.,ltd</h1>
   </div>
   <div class="flex gap-3 items-center">
-    <a href="#top" class="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">Home</a>
-    <a href="#askForm" class="bg-blue-200 px-3 py-1 rounded hover:bg-blue-300">Ask</a>
-    <a href="#downloadForm" class="bg-red-200 px-3 py-1 rounded hover:bg-red-300">Download</a>
+    <a href="#top" class="menu-link bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">Home</a>
+    <a href="#askForm" class="menu-link bg-blue-200 px-3 py-1 rounded hover:bg-blue-300">Ask</a>
+    <a href="#downloadForm" class="menu-link bg-red-200 px-3 py-1 rounded hover:bg-red-300">Download</a>
     <button onclick="setLang('en')">EN</button> |
     <button onclick="setLang('id')">ID</button> |
     <button onclick="setLang('jp')">日本語</button>
   </div>
 </header>
+
+<!-- Spacer for fixed header -->
+<div class="h-16"></div>
 
 <!-- Text berjalan -->
 <div class="bg-yellow-100 py-2">
@@ -112,9 +115,9 @@ function setLang(lang) {
     id: {
       hero:"Bebas Bekas Tekukan",
       desc:"Radius indah dan flange pendek tanpa bekas.",
-      form:"Tanyakan tentang WingBend",
+      form:"Tanya tentang WingBend",
       download:"Unduh Katalog",
-      marquee:"Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membentuk tanpa bekas"
+      marquee:"Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membengkokkan tanpa bekas"
     },
     jp: {
       hero:"無痕曲げ",
@@ -159,6 +162,33 @@ document.getElementById('downloadFormElement').addEventListener('submit', e=>{
       alert("✅ Data submitted. Please choose catalog language.");
     })
     .catch(() => alert("❌ Failed to submit data."));
+});
+
+// ---- Highlight active menu saat scroll ----
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".menu-link");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+  sections.forEach(sec => {
+    const secTop = sec.offsetTop - 120; // offset untuk header
+    if (pageYOffset >= secTop) {
+      current = sec.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove("bg-gray-300","bg-blue-300","bg-red-300");
+    if (link.getAttribute("href") === "#" + current) {
+      if (current === "askForm") {
+        link.classList.add("bg-blue-300");
+      } else if (current === "downloadForm") {
+        link.classList.add("bg-red-300");
+      } else {
+        link.classList.add("bg-gray-300");
+      }
+    }
+  });
 });
 </script>
 
