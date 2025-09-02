@@ -2,102 +2,158 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>WingBend – Mark-Free Forming</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .hero-bg {
-      background: url('images/WingBend-PLUS-Komplett.jpg') center/cover no-repeat;
+    /* Background image */
+    .hero-bg { background: url('images/WingBend-PLUS-Komplett.jpg') center/cover no-repeat; }
+
+    /* Accessible ticker to replace <marquee> */
+    .ticker { position: relative; overflow: hidden; }
+    .ticker__track { display: inline-block; padding-left: 100%; animation: ticker 20s linear infinite; white-space: nowrap; }
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker__track { animation: none; transform: none; padding-left: 0; }
     }
-    marquee {
-      font-weight: bold;
-      color: #b91c1c;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
+
+    html { scroll-behavior: smooth; }
   </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-50 font-sans antialiased">
 
 <!-- Header -->
-<header class="flex justify-between items-center p-4 bg-white shadow fixed top-0 w-full z-50">
-  <div class="flex items-center gap-2">
-    <img src="images/tsh.png" alt="Logo" class="h-8">
-    <h1 class="text-xl font-bold">Tokyo Seimitsu Hatsujo.co.,ltd</h1>
+<header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b">
+  <div class="max-w-6xl mx-auto h-16 px-4 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2">
+      <img src="images/tsh.png" alt="Tokyo Seimitsu Hatsujo logo" class="h-8 w-auto">
+      <span class="text-base sm:text-xl font-bold">Tokyo Seimitsu Hatsujo.co.,ltd</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-2">
+      <a href="#top" class="menu-link inline-flex items-center px-3 py-1.5 rounded-md bg-gray-200 hover:bg-gray-300 transition" aria-current="page">Home</a>
+      <a href="#askForm" class="menu-link inline-flex items-center px-3 py-1.5 rounded-md bg-blue-200 hover:bg-blue-300 transition">Ask</a>
+      <a href="#downloadForm" class="menu-link inline-flex items-center px-3 py-1.5 rounded-md bg-red-200 hover:bg-red-300 transition">Download</a>
+      <span class="mx-1 hidden lg:inline">|</span>
+      <div class="hidden lg:flex items-center gap-2">
+        <button class="lang-btn px-2 py-1 rounded border" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn px-2 py-1 rounded border" data-lang="id" aria-pressed="false">ID</button>
+        <button class="lang-btn px-2 py-1 rounded border" data-lang="jp" aria-pressed="false">日本語</button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu button -->
+    <button id="menuBtn" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
   </div>
-  <div class="flex gap-3 items-center">
-    <a href="#top" class="menu-link bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">Home</a>
-    <a href="#askForm" class="menu-link bg-blue-200 px-3 py-1 rounded hover:bg-blue-300">Ask</a>
-    <a href="#downloadForm" class="menu-link bg-red-200 px-3 py-1 rounded hover:bg-red-300">Download</a>
-    <button onclick="setLang('en')">EN</button> |
-    <button onclick="setLang('id')">ID</button> |
-    <button onclick="setLang('jp')">日本語</button>
+
+  <!-- Mobile nav -->
+  <div id="mobileMenu" class="md:hidden hidden border-t bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2">
+      <a href="#top" class="menu-link block px-3 py-2 rounded-md bg-gray-200">Home</a>
+      <a href="#askForm" class="menu-link block px-3 py-2 rounded-md bg-blue-200">Ask</a>
+      <a href="#downloadForm" class="menu-link block px-3 py-2 rounded-md bg-red-200">Download</a>
+      <div class="flex items-center gap-2 pt-2">
+        <span class="text-sm text-gray-600">Language:</span>
+        <button class="lang-btn px-2 py-1 rounded border" data-lang="en">EN</button>
+        <button class="lang-btn px-2 py-1 rounded border" data-lang="id">ID</button>
+        <button class="lang-btn px-2 py-1 rounded border" data-lang="jp">日本語</button>
+      </div>
+    </div>
   </div>
 </header>
 
-<!-- Spacer for fixed header -->
-<div class="h-16"></div>
+<!-- Main wrapper (offset for fixed header) -->
+<main class="pt-16">
 
-<!-- Text berjalan -->
-<div class="bg-yellow-100 py-2">
-  <marquee id="marqueeText" behavior="scroll" direction="left">
-    Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Redefining Mark-Free Forming
-  </marquee>
-</div>
-
-<!-- Hero -->
-<section id="top" class="relative hero-bg h-[350px] flex flex-col items-center justify-center text-center text-white">
-  <!-- Overlay -->
-  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-  
-  <!-- Content -->
-  <div class="relative z-10 px-4">
-    <h2 id="hero-title" class="text-4xl font-bold drop-shadow-lg">Mark-Free Forming</h2>
-    <p id="hero-desc" class="mt-3 text-lg drop-shadow-lg">
-      Beautiful radius and short flanges with minimal marking.
-    </p>
-    <a href="#downloadForm" class="mt-6 inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg shadow-lg transition">
-      📥 Download Catalog
-    </a>
-  </div>
-</section>
-
-<!-- Form Pertanyaan -->
-<section id="askForm" class="p-8 bg-white shadow max-w-lg mx-auto mt-8">
-  <h3 class="text-xl font-bold mb-4" id="form-title">Ask About WingBend</h3>
-  <form id="questionForm" class="space-y-4">
-    <input type="text" name="name" placeholder="Name" class="w-full border p-2" required>
-    <input type="tel" name="phone" placeholder="Phone Number" class="w-full border p-2" required>
-    <input type="email" name="email" placeholder="Email" class="w-full border p-2" required>
-    <textarea name="message" placeholder="Message" class="w-full border p-2"></textarea>
-    <div class="flex gap-2">
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2">Send</button>
-      <a href="https://wa.me/818021409299" target="_blank" 
-         class="bg-green-600 text-white px-4 py-2">WhatsApp</a>
+  <!-- Ticker (replaces <marquee>) -->
+  <div class="ticker bg-yellow-100 py-2">
+    <div id="tickerText" class="ticker__track font-semibold text-red-700">
+      Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Redefining Mark-Free Forming
     </div>
-  </form>
-</section>
-
-<!-- Download Catalog -->
-<section class="p-8 text-center" id="downloadForm">
-  <h3 class="text-xl font-bold mb-4" id="download-title">Download Catalog</h3>
-  <form id="downloadFormElement" class="space-y-4 max-w-md mx-auto">
-    <input type="text" name="name" placeholder="Name" class="w-full border p-2" required>
-    <input type="tel" name="phone" placeholder="Phone Number" class="w-full border p-2" required>
-    <input type="email" name="email" placeholder="Email" class="w-full border p-2" required>
-    <input type="text" name="company" placeholder="Company" class="w-full border p-2" required>
-    <button type="submit" class="bg-red-600 text-white px-4 py-2">Submit</button>
-  </form>
-  <div id="downloadOptions" class="hidden mt-4 space-x-4">
-    <a href="e catalog.pdf" download class="bg-blue-600 text-white px-4 py-2 rounded">📥 English Catalog</a>
-    <a href="e catalog jp.pdf" download class="bg-yellow-600 text-white px-4 py-2 rounded">📥 日本語カタログ</a>
   </div>
-</section>
+
+  <!-- Hero -->
+  <section id="top" class="relative hero-bg min-h-[60vh] md:min-h-[70vh] lg:min-h-[75vh] flex flex-col items-center justify-center text-center text-white scroll-mt-24">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-black/30"></div>
+    <div class="relative z-10 px-4">
+      <h2 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg">Mark-Free Forming</h2>
+      <p id="hero-desc" class="mt-3 text-base sm:text-lg md:text-xl drop-shadow-lg max-w-2xl mx-auto">
+        Beautiful radius and short flanges with minimal marking.
+      </p>
+      <a href="#downloadForm" class="mt-6 inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg shadow-lg transition w-full sm:w-auto">
+        📥 Download Catalog
+      </a>
+    </div>
+  </section>
+
+  <!-- Ask Form -->
+  <section id="askForm" class="scroll-mt-24 px-4 py-10">
+    <div class="bg-white border shadow-sm rounded-2xl max-w-xl mx-auto p-6 sm:p-8">
+      <h3 class="text-xl font-bold mb-4" id="form-title">Ask About WingBend</h3>
+      <form id="questionForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="q-name">Name</label>
+          <input id="q-name" type="text" name="name" autocomplete="name" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="q-phone">Phone Number</label>
+          <input id="q-phone" type="tel" inputmode="tel" name="phone" autocomplete="tel" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="q-email">Email</label>
+          <input id="q-email" type="email" name="email" autocomplete="email" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="q-message">Message</label>
+          <textarea id="q-message" name="message" rows="4" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Your question..."></textarea>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">Send</button>
+          <a href="https://wa.me/818021409299" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-center">WhatsApp</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Download Catalog -->
+  <section id="downloadForm" class="scroll-mt-24 px-4 py-10">
+    <div class="text-center max-w-xl mx-auto">
+      <h3 class="text-xl font-bold mb-4" id="download-title">Download Catalog</h3>
+      <form id="downloadFormElement" class="space-y-4 bg-white border shadow-sm rounded-2xl p-6 sm:p-8 text-left">
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="d-name">Name</label>
+          <input id="d-name" type="text" name="name" autocomplete="name" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="d-phone">Phone Number</label>
+          <input id="d-phone" type="tel" inputmode="tel" name="phone" autocomplete="tel" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="d-email">Email</label>
+          <input id="d-email" type="email" name="email" autocomplete="email" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="d-company">Company</label>
+          <input id="d-company" type="text" name="company" autocomplete="organization" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" required>
+        </div>
+        <button type="submit" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">Submit</button>
+      </form>
+
+      <div id="downloadOptions" class="hidden mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <a href="e catalog.pdf" download class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md block text-center">📥 English Catalog</a>
+        <a href="e catalog jp.pdf" download class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md block text-center">📥 日本語カタログ</a>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <!-- Footer -->
 <footer class="p-4 bg-gray-100 text-center text-sm">
-  © Tokyo Seimitsu Hatsujo Co., Ltd. <br>
+  © <span id="yearSpan"></span> Tokyo Seimitsu Hatsujo Co., Ltd. <br>
   Design by Wahyu
 </footer>
 
@@ -106,90 +162,109 @@
 function setLang(lang) {
   const dict = {
     en: {
-      hero:"Mark-Free Forming",
-      desc:"Beautiful radius and short flanges with minimal marking.",
-      form:"Ask About WingBend",
-      download:"Download Catalog",
-      marquee:"Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Redefining Mark-Free Forming"
+      hero: "Mark-Free Forming",
+      desc: "Beautiful radius and short flanges with minimal marking.",
+      form: "Ask About WingBend",
+      download: "Download Catalog",
+      ticker: "Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Redefining Mark-Free Forming"
     },
     id: {
-      hero:"Bebas Bekas Tekukan",
-      desc:"Radius indah dan flange pendek tanpa bekas.",
-      form:"Tanya tentang WingBend",
-      download:"Unduh Katalog",
-      marquee:"Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membengkokkan tanpa bekas"
+      hero: "Bebas Bekas Tekukan",
+      desc: "Radius indah dan flange pendek tanpa bekas.",
+      form: "Tanya tentang WingBend",
+      download: "Unduh Katalog",
+      ticker: "Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membengkokkan tanpa bekas"
     },
     jp: {
-      hero:"ウィングベンド・ウィングベンドプラス",
-      desc:"ベンディング常識を変える翼異の完全キズ無し加工。",
-      form:"WingBend問い合わせ",
-      download:"カタログダウンロード",
-      marquee:"東京精密発條株式会社 – ウィングベンド・ウィングベンドプラス – ベンディング常識を変える翼異の完全キズ無し加工"
+      hero: "ウィングベンド・ウィングベンドプラス",
+      desc: "ベンディング常識を変える翼異の完全キズ無し加工。",
+      form: "WingBend問い合わせ",
+      download: "カタログダウンロード",
+      ticker: "東京精密発條株式会社 – ウィングベンド・ウィングベンドプラス – ベンディング常識を変える翼異の完全キズ無し加工"
     }
   };
-  document.getElementById('hero-title').innerText = dict[lang].hero;
-  document.getElementById('hero-desc').innerText = dict[lang].desc;
-  document.getElementById('form-title').innerText = dict[lang].form;
-  document.getElementById('download-title').innerText = dict[lang].download;
-  document.getElementById('marqueeText').innerText = dict[lang].marquee;
+  const cur = dict[lang] || dict.en;
+  document.getElementById('hero-title').innerText = cur.hero;
+  document.getElementById('hero-desc').innerText = cur.desc;
+  document.getElementById('form-title').innerText = cur.form;
+  document.getElementById('download-title').innerText = cur.download;
+  document.getElementById('tickerText').innerText = cur.ticker;
+
+  // Save & reflect active language buttons
+  localStorage.setItem('lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    const active = btn.dataset.lang === lang;
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    btn.classList.toggle('bg-gray-900', active);
+    btn.classList.toggle('text-white', active);
+  });
 }
 
-// ---- URL Google Apps Script (simpan ke Google Sheets) ----
+// ---- Google Apps Script endpoint ----
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwy9I8eJrigp0lo5KrkiPCjHvTWaZgrGoinin14A8TX8f-in5qfBfqfBwhWRqeRif-z/exec";
 
-// ---- Form pertanyaan: simpan ke Google Sheet + buka email client ----
-document.getElementById('questionForm').addEventListener('submit', e=>{
+// ---- Question form: save to Google Sheet + open email client ----
+document.getElementById('questionForm').addEventListener('submit', e => {
   e.preventDefault();
   const form = e.target;
-
   fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
-    .then(() => console.log("✅ Question saved to Google Sheet"))
-    .catch(() => console.error("❌ Failed to save question"));
+    .then(() => console.log('✅ Question saved to Google Sheet'))
+    .catch(() => console.error('❌ Failed to save question'));
 
-  const subject = "WingBend Inquiry from " + form.name.value;
+  const subject = 'WingBend Inquiry from ' + form.name.value;
   const body = `Name: ${form.name.value}\nPhone: ${form.phone.value}\nEmail: ${form.email.value}\nMessage: ${form.message.value}`;
   window.location.href = `mailto:wahyu@to-hatsu.co.jp?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
-// ---- Download form: simpan ke Google Sheet + tampilkan pilihan EN / JP ----
-document.getElementById('downloadFormElement').addEventListener('submit', e=>{
+// ---- Download form: save to Google Sheet + show EN/JP ----
+document.getElementById('downloadFormElement').addEventListener('submit', e => {
   e.preventDefault();
   const form = e.target;
-
   fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
     .then(() => {
       document.getElementById('downloadOptions').classList.remove('hidden');
-      alert("✅ Data submitted. Please choose catalog language.");
+      alert('✅ Data submitted. Please choose catalog language.');
     })
-    .catch(() => alert("❌ Failed to submit data."));
+    .catch(() => alert('❌ Failed to submit data.'));
 });
 
-// ---- Highlight active menu saat scroll ----
-const sections = document.querySelectorAll("section[id]");
-const navLinks = document.querySelectorAll(".menu-link");
-
-window.addEventListener("scroll", () => {
-  let current = "";
-  sections.forEach(sec => {
-    const secTop = sec.offsetTop - 120; // offset untuk header
-    if (pageYOffset >= secTop) {
-      current = sec.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach(link => {
-    link.classList.remove("bg-gray-300","bg-blue-300","bg-red-300");
-    if (link.getAttribute("href") === "#" + current) {
-      if (current === "askForm") {
-        link.classList.add("bg-blue-300");
-      } else if (current === "downloadForm") {
-        link.classList.add("bg-red-300");
-      } else {
-        link.classList.add("bg-gray-300");
-      }
-    }
-  });
+// ---- Mobile menu toggle ----
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+menuBtn.addEventListener('click', () => {
+  const willOpen = mobileMenu.classList.contains('hidden');
+  mobileMenu.classList.toggle('hidden');
+  menuBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
 });
+
+// ---- Language button handlers (desktop + mobile) ----
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.lang-btn');
+  if (!btn) return;
+  setLang(btn.dataset.lang);
+});
+
+// ---- Highlight active menu during scroll (desktop + mobile links) ----
+const sections = document.querySelectorAll('section[id]');
+const menuLinks = document.querySelectorAll('.menu-link');
+const setActive = (id) => {
+  menuLinks.forEach(link => {
+    const on = link.getAttribute('href') === '#' + id;
+    link.setAttribute('aria-current', on ? 'page' : 'false');
+    link.classList.toggle('ring-2', on);
+    link.classList.toggle('ring-offset-2', on);
+  });
+};
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) setActive(entry.target.id);
+  });
+}, { rootMargin: '-25% 0px -60% 0px', threshold: 0.1 });
+sections.forEach(sec => io.observe(sec));
+
+// ---- Init: year + saved language ----
+document.getElementById('yearSpan').textContent = new Date().getFullYear();
+setLang(localStorage.getItem('lang') || 'en');
 </script>
 
 </body>
