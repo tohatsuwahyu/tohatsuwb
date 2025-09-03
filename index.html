@@ -20,7 +20,7 @@
     html { scroll-behavior: smooth; }
   </style>
 </head>
-<body class="bg-gray-50 font-sans antialiased">
+<body class="bg-gray-50 font-sans antialiased" id="top">
 
 <!-- Header -->
 <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b">
@@ -33,6 +33,7 @@
     <!-- Desktop nav -->
     <nav class="hidden md:flex items-center gap-2">
       <a href="#top" class="menu-link inline-flex items-center px-3 py-1.5 rounded-md bg-gray-200 hover:bg-gray-300 transition" aria-current="page">Home</a>
+      <a href="#rfq" class="menu-link inline-flex items-center px-3 py-1.5 rounded-md bg-green-200 hover:bg-green-300 transition">RFQ</a>
       <a href="#askForm" class="menu-link inline-flex items-center px-3 py-1.5 rounded-md bg-blue-200 hover:bg-blue-300 transition">Ask</a>
       <a href="#downloadForm" class="menu-link inline-flex items-center px-3 py-1.5 rounded-md bg-red-200 hover:bg-red-300 transition">Download</a>
       <span class="mx-1 hidden lg:inline">|</span>
@@ -53,6 +54,7 @@
   <div id="mobileMenu" class="md:hidden hidden border-t bg-white">
     <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2">
       <a href="#top" class="menu-link block px-3 py-2 rounded-md bg-gray-200">Home</a>
+      <a href="#rfq" class="menu-link block px-3 py-2 rounded-md bg-green-200">RFQ</a>
       <a href="#askForm" class="menu-link block px-3 py-2 rounded-md bg-blue-200">Ask</a>
       <a href="#downloadForm" class="menu-link block px-3 py-2 rounded-md bg-red-200">Download</a>
       <div class="flex items-center gap-2 pt-2">
@@ -76,20 +78,88 @@
   </div>
 
   <!-- Hero -->
-  <section id="top" class="relative hero-bg min-h-[60vh] md:min-h-[70vh] lg:min-h-[75vh] flex flex-col items-center justify-center text-center text-white scroll-mt-24">
+  <section class="relative hero-bg min-h-[60vh] md:min-h-[70vh] lg:min-h-[75vh] flex flex-col items-center justify-center text-center text-white scroll-mt-24">
     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-black/30"></div>
     <div class="relative z-10 px-4">
       <h2 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg">Mark-Free Forming</h2>
       <p id="hero-desc" class="mt-3 text-base sm:text-lg md:text-xl drop-shadow-lg max-w-2xl mx-auto">
         Beautiful radius and short flanges with minimal marking.
       </p>
-      <a href="#downloadForm" class="mt-6 inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg shadow-lg transition w-full sm:w-auto">
-        📥 Download Catalog
-      </a>
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="#rfq" id="hero-cta-rfq" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg transition w-full sm:w-auto">
+          💬 RFQ via WhatsApp
+        </a>
+        <a href="#downloadForm" class="inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg shadow-lg transition w-full sm:w-auto">
+          📥 Download Catalog
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- Ask Form -->
+  <!-- NEW: RFQ via WhatsApp (short form) -->
+  <section id="rfq" class="scroll-mt-24 px-4 py-10">
+    <div class="bg-white border shadow-sm rounded-2xl max-w-2xl mx-auto p-6 sm:p-8">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h3 class="text-xl font-bold mb-1" id="rfq-title">RFQ via WhatsApp</h3>
+          <p class="text-gray-600" id="rfq-desc">Form singkat. Setelah kirim, sistem akan membuka WhatsApp dengan pesan otomatis.</p>
+        </div>
+        <a id="rfq-wa-only" href="#" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-green-700 border-green-200 hover:bg-green-50">
+          Buka WhatsApp saja
+        </a>
+      </div>
+      <form id="rfqForm" class="mt-5 space-y-4" novalidate>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700" for="r-name" id="rfq-name-label">Nama <span class="text-red-500">*</span></label>
+            <input id="r-name" name="name" type="text" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700" for="r-company" id="rfq-company-label">Perusahaan <span class="text-red-500">*</span></label>
+            <input id="r-company" name="company" type="text" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700" for="r-usecase" id="rfq-usecase-label">Aplikasi / Use case <span class="text-red-500">*</span></label>
+            <input id="r-usecase" name="usecase" type="text" placeholder="Contoh: bending part stainless untuk food-grade" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+            <p class="text-xs text-gray-500 mt-1" id="rfq-hint">Sebutkan proses/lini atau standar khusus (SNI/TKDN) bila ada.</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700" for="r-qty" id="rfq-qty-label">Perkiraan kuantitas <span class="text-red-500">*</span></label>
+            <input id="r-qty" name="qty" type="text" placeholder="Mis. 1 set / 500 unit / bulanan" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700" for="r-timeline" id="rfq-timeline-label">Target waktu <span class="text-red-500">*</span></label>
+            <select id="r-timeline" name="timeline" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+              <option value="">Pilih...</option>
+              <option>Secepatnya (≤ 2 minggu)</option>
+              <option>1 bulan</option>
+              <option>2–3 bulan</option>
+              <option>> 3 bulan</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700" for="r-contact" id="rfq-contact-label">Kontak</label>
+            <input id="r-contact" name="contact" type="text" placeholder="Nomor WA atau email (opsional)" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700" for="r-notes" id="rfq-notes-label">Catatan</label>
+          <textarea id="r-notes" name="notes" rows="3" placeholder="Opsional: ukuran, material, toleransi, dll." class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"></textarea>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button type="submit" id="rfq-submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">Kirim & buka WhatsApp</button>
+          <a id="rfq-wa-only-2" href="#" class="bg-white border border-green-300 hover:bg-green-50 text-green-700 px-4 py-2 rounded-md text-center">Buka WhatsApp saja</a>
+        </div>
+        <p class="text-xs text-gray-500">Dengan menekan tombol, Anda akan dialihkan ke WhatsApp (Web/app) untuk meneruskan detail RFQ kepada tim Wing Bend.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Ask Form (existing) -->
   <section id="askForm" class="scroll-mt-24 px-4 py-10">
     <div class="bg-white border shadow-sm rounded-2xl max-w-xl mx-auto p-6 sm:p-8">
       <h3 class="text-xl font-bold mb-4" id="form-title">Ask About WingBend</h3>
@@ -118,7 +188,7 @@
     </div>
   </section>
 
-  <!-- Download Catalog -->
+  <!-- Download Catalog (existing) -->
   <section id="downloadForm" class="scroll-mt-24 px-4 py-10">
     <div class="text-center max-w-xl mx-auto">
       <h3 class="text-xl font-bold mb-4" id="download-title">Download Catalog</h3>
@@ -154,33 +224,78 @@
 <!-- Footer -->
 <footer class="p-4 bg-gray-100 text-center text-sm">
   © <span id="yearSpan"></span> Tokyo Seimitsu Hatsujo Co., Ltd. <br>
-  Design by Wahyu
+  Design by Wahyu • WhatsApp: <span id="waShown"></span>
 </footer>
 
 <script>
-// ---- Multi-language dictionary ----
+// ===== Multi-language dictionary (extended for RFQ) =====
 function setLang(lang) {
   const dict = {
     en: {
       hero: "Mark-Free Forming",
       desc: "Beautiful radius and short flanges with minimal marking.",
+      rfqTitle: "RFQ via WhatsApp",
+      rfqDesc: "Short form. After submit, WhatsApp opens with a prefilled message.",
+      rfqOpenOnly: "Open WhatsApp only",
+      rfqBtnSubmit: "Send & open WhatsApp",
+      rfqBtnOnly: "Open WhatsApp only",
+      rfqName: "Name",
+      rfqCompany: "Company",
+      rfqUsecase: "Application / Use case",
+      rfqQty: "Estimated quantity",
+      rfqTimeline: "Target timing",
+      rfqContact: "Contact",
+      rfqNotes: "Notes",
+      rfqHint: "Mention line/process or standards (SNI/TKDN) if any.",
       form: "Ask About WingBend",
       download: "Download Catalog",
-      ticker: "Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Redefining Mark-Free Forming"
+      ticker: "Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Redefining Mark-Free Forming",
+      heroCtaRfq: "💬 RFQ via WhatsApp",
+      heroCtaDl: "📥 Download Catalog"
     },
     id: {
       hero: "Bebas Bekas Tekukan",
       desc: "Radius indah dan flange pendek tanpa bekas.",
+      rfqTitle: "RFQ via WhatsApp",
+      rfqDesc: "Form singkat. Setelah kirim, WhatsApp akan terbuka dengan pesan otomatis.",
+      rfqOpenOnly: "Buka WhatsApp saja",
+      rfqBtnSubmit: "Kirim & buka WhatsApp",
+      rfqBtnOnly: "Buka WhatsApp saja",
+      rfqName: "Nama",
+      rfqCompany: "Perusahaan",
+      rfqUsecase: "Aplikasi / Use case",
+      rfqQty: "Perkiraan kuantitas",
+      rfqTimeline: "Target waktu",
+      rfqContact: "Kontak",
+      rfqNotes: "Catatan",
+      rfqHint: "Sebutkan lini/proses atau standar (SNI/TKDN) bila ada.",
       form: "Tanya tentang WingBend",
       download: "Unduh Katalog",
-      ticker: "Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membengkokkan tanpa bekas"
+      ticker: "Tokyo Seimitsu Hatsujo.co., ltd – Wing Bend / Wing Bend Plus – Membengkokkan tanpa bekas",
+      heroCtaRfq: "💬 RFQ via WhatsApp",
+      heroCtaDl: "📥 Unduh Katalog"
     },
     jp: {
       hero: "ウィングベンド・ウィングベンドプラス",
-      desc: "ベンディング常識を変える翼異の完全キズ無し加工。",
+      desc: "美しいRと短いフランジを最小限のキズで形成。",
+      rfqTitle: "WhatsAppでRFQ",
+      rfqDesc: "簡易フォーム。送信後、内容入りのWhatsAppが開きます。",
+      rfqOpenOnly: "WhatsAppのみ開く",
+      rfqBtnSubmit: "送信してWhatsAppを開く",
+      rfqBtnOnly: "WhatsAppのみ開く",
+      rfqName: "お名前",
+      rfqCompany: "会社名",
+      rfqUsecase: "用途 / ユースケース",
+      rfqQty: "概算数量",
+      rfqTimeline: "希望時期",
+      rfqContact: "連絡先",
+      rfqNotes: "メモ",
+      rfqHint: "ライン/プロセスや規格（SNI/TKDN）があれば記載ください。",
       form: "WingBend問い合わせ",
       download: "カタログダウンロード",
-      ticker: "東京精密発條株式会社 – ウィングベンド・ウィングベンドプラス – ベンディング常識を変える翼異の完全キズ無し加工"
+      ticker: "東京精密発條株式会社 – ウィングベンド・ウィングベンドプラス – Mark-Free Forming",
+      heroCtaRfq: "💬 WhatsAppでRFQ",
+      heroCtaDl: "📥 カタログダウンロード"
     }
   };
   const cur = dict[lang] || dict.en;
@@ -189,7 +304,20 @@ function setLang(lang) {
   document.getElementById('form-title').innerText = cur.form;
   document.getElementById('download-title').innerText = cur.download;
   document.getElementById('tickerText').innerText = cur.ticker;
-
+  document.getElementById('rfq-title').innerText = cur.rfqTitle;
+  document.getElementById('rfq-desc').innerText = cur.rfqDesc;
+  document.getElementById('rfq-name-label').firstChild.textContent = cur.rfqName + ' ';
+  document.getElementById('rfq-company-label').firstChild.textContent = cur.rfqCompany + ' ';
+  document.getElementById('rfq-usecase-label').firstChild.textContent = cur.rfqUsecase + ' ';
+  document.getElementById('rfq-qty-label').firstChild.textContent = cur.rfqQty + ' ';
+  document.getElementById('rfq-timeline-label').firstChild.textContent = cur.rfqTimeline + ' ';
+  document.getElementById('rfq-contact-label').textContent = cur.rfqContact;
+  document.getElementById('rfq-notes-label').textContent = cur.rfqNotes;
+  document.getElementById('rfq-hint').textContent = cur.rfqHint;
+  document.getElementById('rfq-submit').textContent = cur.rfqBtnSubmit;
+  document.getElementById('rfq-wa-only').textContent = cur.rfqOpenOnly;
+  document.getElementById('rfq-wa-only-2').textContent = cur.rfqBtnOnly;
+  document.getElementById('hero-cta-rfq').textContent = cur.heroCtaRfq;
   // Save & reflect active language buttons
   localStorage.setItem('lang', lang);
   document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -203,21 +331,41 @@ function setLang(lang) {
 // ---- Google Apps Script endpoint ----
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwy9I8eJrigp0lo5KrkiPCjHvTWaZgrGoinin14A8TX8f-in5qfBfqfBwhWRqeRif-z/exec";
 
+// ---- WhatsApp config ----
+const PHONE_E164 = "6281200000000"; // GANTI nomor bisnis Anda (tanpa +, tanpa 0 di depan)
+const DEFAULT_GREETING = "Halo Wing Bend, saya ingin mengirim RFQ.";
+
+function buildMessage(data){
+  const lines = [
+    "RFQ — Wing Bend",
+    `Nama: ${data.name || '-'}`,
+    `Perusahaan: ${data.company || '-'}`,
+    `Aplikasi: ${data.usecase || '-'}`,
+    `Qty: ${data.qty || '-'}`,
+    `Target waktu: ${data.timeline || '-'}`,
+    `Kontak: ${data.contact || '-'}`,
+    data.notes ? `Catatan: ${data.notes}` : null
+  ].filter(Boolean);
+  return lines.join('\n');
+}
+function waUrl(text){ return `https://wa.me/${PHONE_E164}?text=${encodeURIComponent(text)}`; }
+
 // ---- Question form: save to Google Sheet + open email client ----
-document.getElementById('questionForm').addEventListener('submit', e => {
+const qForm = document.getElementById('questionForm');
+qForm.addEventListener('submit', e => {
   e.preventDefault();
   const form = e.target;
   fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
-    .then(() => console.log('✅ Question saved to Google Sheet'))
-    .catch(() => console.error('❌ Failed to save question'));
-
+    .then(() => console.log('✅ Question saved'))
+    .catch(() => console.warn('❌ Failed to save question'));
   const subject = 'WingBend Inquiry from ' + form.name.value;
   const body = `Name: ${form.name.value}\nPhone: ${form.phone.value}\nEmail: ${form.email.value}\nMessage: ${form.message.value}`;
   window.location.href = `mailto:wahyu@to-hatsu.co.jp?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
 // ---- Download form: save to Google Sheet + show EN/JP ----
-document.getElementById('downloadFormElement').addEventListener('submit', e => {
+const dlForm = document.getElementById('downloadFormElement');
+dlForm.addEventListener('submit', e => {
   e.preventDefault();
   const form = e.target;
   fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
@@ -226,6 +374,42 @@ document.getElementById('downloadFormElement').addEventListener('submit', e => {
       alert('✅ Data submitted. Please choose catalog language.');
     })
     .catch(() => alert('❌ Failed to submit data.'));
+});
+
+// ---- RFQ form: save (optional) + open WhatsApp ----
+const rfqForm = document.getElementById('rfqForm');
+rfqForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const data = {
+    name: document.getElementById('r-name').value.trim(),
+    company: document.getElementById('r-company').value.trim(),
+    usecase: document.getElementById('r-usecase').value.trim(),
+    qty: document.getElementById('r-qty').value.trim(),
+    timeline: document.getElementById('r-timeline').value,
+    contact: document.getElementById('r-contact').value.trim(),
+    notes: document.getElementById('r-notes').value.trim(),
+    utm: Object.fromEntries(new URLSearchParams(location.search))
+  };
+  if(!data.name || !data.company || !data.usecase || !data.qty || !data.timeline){
+    alert('Lengkapi kolom wajib terlebih dahulu.');
+    return;
+  }
+  // Save to Google Sheet (non-blocking)
+  const fd = new FormData();
+  Object.entries({
+    source: 'LP-RFQ-WhatsApp',
+    ...data
+  }).forEach(([k,v]) => fd.append(k, typeof v === 'string' ? v : JSON.stringify(v)));
+  fetch(SCRIPT_URL, { method: 'POST', body: fd }).catch(()=>{});
+
+  const text = buildMessage(data);
+  window.location.href = waUrl(text);
+});
+
+// RFQ: open WA only buttons
+['rfq-wa-only','rfq-wa-only-2'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('click', (e)=>{ e.preventDefault(); window.location.href = waUrl(DEFAULT_GREETING); });
 });
 
 // ---- Mobile menu toggle ----
@@ -256,14 +440,13 @@ const setActive = (id) => {
   });
 };
 const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) setActive(entry.target.id);
-  });
+  entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id); });
 }, { rootMargin: '-25% 0px -60% 0px', threshold: 0.1 });
 sections.forEach(sec => io.observe(sec));
 
-// ---- Init: year + saved language ----
+// ---- Init: year + saved language + show WA ----
 document.getElementById('yearSpan').textContent = new Date().getFullYear();
+document.getElementById('waShown').textContent = '+' + PHONE_E164;
 setLang(localStorage.getItem('lang') || 'en');
 </script>
 
