@@ -102,31 +102,31 @@
       <div class="flex items-start justify-between gap-4">
         <div>
           <h3 class="text-xl font-bold mb-1" id="rfq-title">RFQ via WhatsApp</h3>
-          <p class="text-gray-600" id="rfq-desc">Form singkat. Setelah kirim, sistem akan membuka WhatsApp dengan pesan otomatis.</p>
+          <p class="text-gray-600" id="rfq-desc">A short form. After submitting, the system will open WhatsApp with an automated message.</p>
         </div>
         <a id="rfq-wa-only" href="#" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-green-700 border-green-200 hover:bg-green-50">
-          Buka WhatsApp saja
+          Open WhatsApp
         </a>
       </div>
       <form id="rfqForm" class="mt-5 space-y-4" novalidate>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-sm font-medium text-gray-700" for="r-name" id="rfq-name-label">Nama <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700" for="r-name" id="rfq-name-label">Name <span class="text-red-500">*</span></label>
             <input id="r-name" name="name" type="text" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700" for="r-company" id="rfq-company-label">Perusahaan <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700" for="r-company" id="rfq-company-label">Company <span class="text-red-500">*</span></label>
             <input id="r-company" name="company" type="text" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
           </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-sm font-medium text-gray-700" for="r-usecase" id="rfq-usecase-label">Aplikasi / Use case <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700" for="r-usecase" id="rfq-usecase-label">Aplication / Use case <span class="text-red-500">*</span></label>
             <input id="r-usecase" name="usecase" type="text" placeholder="example: bending part stainless untuk food-grade" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
-            <p class="text-xs text-gray-500 mt-1" id="rfq-hint">Sebutkan proses/lini atau standar khusus (SNI/TKDN) bila ada.</p>
+            <p class="text-xs text-gray-500 mt-1" id="rfq-hint">Please state the process/line or specific standard (SNI/TKDN) if any.(Sebutkan proses/lini atau standar khusus (SNI/TKDN) bila ada.)</p>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700" for="r-qty" id="rfq-qty-label">Perkiraan kuantitas <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700" for="r-qty" id="rfq-qty-label">Estimated quantity <span class="text-red-500">*</span></label>
             <input id="r-qty" name="qty" type="text" placeholder="Mis. 1 set / 500 unit / bulanan" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
           </div>
         </div>
@@ -135,7 +135,7 @@
             <label class="block text-sm font-medium text-gray-700" for="r-timeline" id="rfq-timeline-label">Target time <span class="text-red-500">*</span></label>
             <select id="r-timeline" name="timeline" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
               <option value="">Choose...</option>
-              <option>Quick/Cepat (≤ 2 Week/minggu)</option>
+              <option>Quick/Cepat (≤ 2 Weeks/minggu)</option>
               <option>1 Month/bulan</option>
               <option>2–3 Month/bulan</option>
               <option>> 3 Month/bulan</option>
@@ -143,18 +143,18 @@
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700" for="r-contact" id="rfq-contact-label">Contact</label>
-            <input id="r-contact" name="contact" type="text" placeholder="Nomor WA atau email (opsional)" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            <input id="r-contact" name="contact" type="text" placeholder="Whatsapp number or email (optional)" class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
           </div>
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700" for="r-notes" id="rfq-notes-label">Catatan</label>
-          <textarea id="r-notes" name="notes" rows="3" placeholder="Opsional: ukuran, material, toleransi, dll." class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"></textarea>
+          <textarea id="r-notes" name="notes" rows="3" placeholder="Optional: size, material, tolerance, etc." class="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"></textarea>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button type="submit" id="rfq-submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">Kirim & buka WhatsApp</button>
-          <a id="rfq-wa-only-2" href="#" class="bg-white border border-green-300 hover:bg-green-50 text-green-700 px-4 py-2 rounded-md text-center">Buka WhatsApp saja</a>
+          <button type="submit" id="rfq-submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">Send & open WhatsApp</button>
+          <a id="rfq-wa-only-2" href="#" class="bg-white border border-green-300 hover:bg-green-50 text-green-700 px-4 py-2 rounded-md text-center">Open WhatsApp</a>
         </div>
-        <p class="text-xs text-gray-500">Dengan menekan tombol, Anda akan dialihkan ke WhatsApp (Web/app) untuk meneruskan detail RFQ kepada tim Wing Bend.</p>
+        <p class="text-xs text-gray-500">By pressing the button, you will be redirected to WhatsApp (Web/app) to forward the RFQ details to the Wing Bend team.</p>
       </form>
     </div>
   </section>
